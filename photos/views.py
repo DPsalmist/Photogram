@@ -18,7 +18,7 @@ from django.views.generic import (
 	UpdateView,
 	DeleteView
 )
-
+#added something
 # class PhotoListView(ListView):
 # 	model = Photo
 # 	template_name = 'photos/gallery.html' #<app>/<model>/<viewtypet>.html
