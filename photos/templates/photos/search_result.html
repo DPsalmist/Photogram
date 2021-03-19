@@ -1,0 +1,14 @@
+{% extends 'photos/base.html' %}
+{% block content %}
+
+<h1>Search Results</h1>
+
+<ul>
+  {% for search in object_list %}
+    <li>
+      {{ search.name }}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

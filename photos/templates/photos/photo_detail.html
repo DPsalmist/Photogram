@@ -1,0 +1,57 @@
+{% extends 'photos/base.html' %}
+{% block content %}
+
+	<div class="container">
+		<div class="row justify-content center">
+			<div class="col-md-6">
+				<a href="{% url 'gallery' %}" class="btn btn-dark my-3">Go back</a>
+				 <p>
+     				<a href="{% url "photo_feed" %}" class="btn btn-success btn-block btn-sm m-1">Subscribe to my RSS feed</a>
+				</p>
+				{% with comments.count as total_comments %}
+     			<p class="text-muted">
+       				All Comments: {{ total_comments }}
+     			</p>
+				{% endwith %}
+				<div style="height:75vh;">
+					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}">	
+					<p class="m-1"><b>Description:</b> {{ photo.description }}</p>
+					<small class="text-muted">
+						<i>Posted by <a href="{% url 'user_pics' object.owner.username %}">{{ object.owner }}</a> on: {{ object.created|date:'F d, Y'  }}</i>
+					</small>
+				</div>
+				<hr>
+			</div>
+		</div>
+			<!-- COMMENT START -->
+			<div class="row justify-content center">
+				<!-- Comment Section Row-->
+				<div class="col-md-6">
+					{% for comment in comments %}
+				     <div class="comment" style="background-color: whitesmoke">
+				       <small class="text-muted"><i>
+				         Comment by: {{ comment.name }} on {{ comment.created }}
+						</i></small>
+				       		{{ comment.body|linebreaks }}
+				     </div>
+				   	{% empty %}
+				     	<p>There are no comments yet.</p>
+					{% endfor %}
+
+					<!-- Comment Form -->
+					{% if new_comment %}
+				     	<p>Your comment has been added.</p>
+					{% else %}
+					     <h3>Add a new comment</h3>
+					     <form method="post">
+					       {{ comment_form.as_p }}
+					       {% csrf_token %}
+					       <p><input type="submit" value="Add comment" class="btn btn-success btn-block btn-sm m-1"></p>
+					     </form>
+				   	{% endif %}
+				</div>
+			</div>
+		   <!-- End of Comment Section -->
+	</div>
+
+{% endblock content %}

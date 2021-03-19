@@ -1,0 +1,115 @@
+{% extends 'photos/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+	<div class="container">
+		<div class="row justify-content center">
+			<div class="col-md-6">
+				<a href="{% url 'gallery' %}" class="btn btn-dark my-3">Go back</a>
+				
+				{% with comments.count as total_comments %}
+     			<p class="text-muted">
+       				All Comments: {{ total_comments }}
+     			</p>
+				{% endwith %}
+<!-- 				<p>
+     				<a href="{% url "photo_feed" %}" class="btn btn-success btn-block btn-sm m-1">Subscribe to my RSS feed</a>
+				</p> -->
+				<small class="text-muted">
+					<i>Posted by <a href="{% url 'user_pics' photo.owner %}">{{ photo.owner }}</a> on: {{ photo.created }}</i>
+				</small>
+				<div style="height:75vh;">
+					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}">
+					<p class="m-1"><b>Description:</b> {{ photo.description }}</p>	
+					<hr>
+				</div>
+				{% if photo.owner == user %}
+					<div>
+						<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'photo_update' photo.id %}">Update</a>
+						<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'photo_delete' photo.id %}">Delete</a>
+					</div>
+				{% endif %}		
+			</div>
+
+			<!-- USER LIKE SECTION -->
+			<!-- <div class="col-md-6">
+				<h3>User Likes</h3>
+				{% with total_likes=image.users_like.count %}
+			       <div class="image-info">
+			         <div>
+			           <span class="count">
+			             {{ total_likes }} like{{ total_likes|pluralize }}
+			           </span>
+			         </div>
+			         {{ image.description|linebreaks }}
+			       </div>
+			       <div class="image-likes">
+			         {% for user in image.users_like.all %}
+			           <div>
+			             <img src="{{ user.profile.photo.url }}">
+			             <p>{{ user.first_name }}</p>
+			           </div>
+			         {% empty %}
+			           Nobody likes this image yet.
+			         {% endfor %}
+			       </div>
+			     {% endwith %}
+			</div> -->
+		</div>
+
+		<!-- Comment Section Row-->
+
+		<!-- Authenticated User-->
+		{% if photo.owner == user %}
+		<div class="row justify-content center">
+			<div class="col-md-6">
+				{% for comment in comments %}
+			     <div class="comment" style="background-color: whitesmoke">
+			       <small class="text-muted">
+			       	<i>
+			         Comment by: {{ comment.name }} on {{ comment.created }}
+					</i>
+					</small>
+			       	{{ comment.body|linebreaks }}
+			     </div>
+			   	{% empty %}
+			     	<p>There are no comments yet.</p>
+				{% endfor %}
+			</div>
+		</div>
+		{% else %}
+		<!-- Authentication end -->
+		
+		<!-- Other Users -->
+		<div class="row justify-content center">
+			<div class="col-md-6">
+			{% for comment in comments %}
+			     <div class="comment" style="background-color: whitesmoke">
+			       <small class="text-muted">
+			       	<i>
+			         Comment by: {{ comment.name }} on {{ comment.created }}
+					</i>
+					</small>
+			       	{{ comment.body|linebreaks }}
+			     </div>
+			   	{% empty %}
+			     	<p>There are no comments yet.</p>
+			{% endfor %}
+				<!-- Comment Form -->
+				{% if new_comment %}
+			     	<p>Your comment has been added.</p>
+				{% else %}
+				    <h3>Add a new comment</h3>
+				    <form method="post">
+				       {{ comment_form|crispy }}
+				       {% csrf_token %}
+				       <p><input type="submit" value="Add comment" class="btn btn-success btn-block btn-sm m-1"></p>
+				    </form>
+			   	{% endif %}
+			</div>
+		</div>
+		{% endif %}
+		<!-- End of Comment Section -->
+	</div>
+
+{% endblock content %}

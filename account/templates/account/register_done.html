@@ -1,0 +1,20 @@
+{% extends "photos/base.html" %}
+{% block content %}  
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- Categories section -->
+      <div class="col-md-3"></div>
+
+      <div class="col-md-6 signup"> 
+        <h3>Welcome {{ new_user.first_name }} to Photogram!</h3>
+        <small class="text-muted"><i>We're excited to have you here.</i></small>
+     	<p>
+     		Your account has been successfully created. Now you can <a href="{% url "login" %}">
+     		log in</a>.
+     	</p>
+      </div>
+      <div class="col-md-3"></div>
+  </div>
+</div>
+{% endblock content %}

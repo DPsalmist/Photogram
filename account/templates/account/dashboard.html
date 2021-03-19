@@ -1,0 +1,40 @@
+{% extends 'photos/base.html' %}
+{% block content %}
+<div class="container m-5">
+		<div class="row">
+			<!-- Categories section -->
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						DASHBOARD
+					</div>
+					<ul class="list-group list-group-flush">
+ 						<li class="list-group-item"> 
+ 						<a href="{% url 'dashboard' %}" class="btn btn-outline-dark btn-sm btn-block">
+							My Dashboad
+						</a>
+						<a href="{% url 'password_change' %}" class="btn btn-outline-dark btn-sm btn-block">
+							Change Password
+						</a>
+						<a href="{% url 'edit' %}" class="btn btn-outline-dark btn-sm btn-block">
+							My Profile
+						</a>
+	 					<li class="list-group-item">
+							<a href="{% url 'add' %}" class="btn btn-success btn-block btn-sm m-1">
+								Add Photo
+							</a>
+						</li>
+					</ul>
+				</div>			
+			</div>
+			<!-- Gallery section -->
+			<div class="col-md-9">
+				<div class="row m-1">
+					something here
+				</div>
+				{% include "photos/pagination.html" with page=photos %}
+
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'photos/base.html' %}
+{% block content %}
+<div class="container mt-5">
+		<div class="row">
+			<!-- Categories section -->
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-header" style="text-align: center;">
+						CATEGORIES
+					</div>
+					<ul class="list-group list-group-flush">
+ 						<li class="list-group-item"> 
+							<a href="{% url 'gallery' %}" class="btn btn-outline-dark btn-sm btn-block">
+								All
+							</a>
+						</li>
+						{% for category in categories %}
+							<a href="{% url 'gallery' %}?category={{ category.name }}" class="btn btn-outline-dark btn-sm btn-block">
+								{{category.name}}
+							</a>
+						{% endfor %}
+ 						<li class="list-group-item">
+							<a href="{% url 'add' %}" class="btn btn-success btn-block btn-sm m-1">
+								Add Photo
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Gallery section -->
+			<div class="col-md-9">
+				<h3>Photos by {{ view.kwargs.username }}: ({{ page_obj.paginator.count }})</h3>
+				<div class="row m-1">
+					{% for photo in my_pics %}
+					<div class="col-md-4">
+						<div class="card">
+						  <img class="image-thumbnail" src="{{ photo.image.url }}" alt="Card image cap">
+						  <div class="card-body">
+						    <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+						    <small>Categories: {{ photo.category.name }}</small><br>
+						   	<small>Owner: {{ photo.owner }}</small>
+						    <!-- <small class="tags">Tags: {{ post.tags.all|join:", " }}</small> -->
+						  </div>
+						  <a href="{% url 'photo_detail' photo.id %}" class="btn btn-outline-success btn-sm m-1">View</a>
+						</div>
+					</div>
+					{% empty %}
+						<h3>No Photos to show</h3>
+					{% endfor %}
+				</div>
+
+				<!-- Pagination -->
+				{% if is_paginated %}
+					{% if page_obj.has_previous %}
+						<a class = "btn btn-outline-success mb-4"href="?page=1">First</a>
+						<a class = "btn btn-outline-success mb-4"href="?page={{ page_obj.previous_page_number }}">Prev</a>
+					{% endif %}
+					<!-- To get links to a few pages before & after your current -->
+						{% for num in page_obj.paginator.page_range %}
+							{% if page_obj.number == num %}
+								<a class = "btn btn-success mb-4"href="?page={{ num }}">{{ num }}</a>
+							<!-- If current page number is between 3 prev and next pages, print it out -->
+							{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+								<a class = "btn btn-outline-success mb-4"href="?page={{ num }}">{{ num }}</a>
+							{% endif %}
+						{% endfor %}
+						{% if page_obj.has_next %}
+							<a class = "btn btn-outline-success mb-4"href="?page={{ page_obj.next_page_number }}">Next</a>
+							<a class = "btn btn-outline-success mb-4"href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+						{% endif %}		
+				{% endif %}
+				<!-- End of pagination -->
+			</div>
+		</div>
+</div>
+{% endblock content %}
