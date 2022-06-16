@@ -32,12 +32,13 @@
 				<h2>Welcome {{ user.username }}
 					<img style="height: 40px; width: 40px; border-radius: 100%" src="{{ user_pic.url }}" alt="user profile pic">
 				</h2>
+				<p>You have a total of {{ total_pics }} picture(s)</p>
 				
 				<div class="">
-					<br>
-					<p>You have a total of {{ total_pics }} picture(s)</p> 
 					<hr>
 					<p>	
+					<b>First name:</b> <span>{{ user.first_name }}</span> <br>
+					<b>Last name:</b> <span>{{ user.last_name }}</span> <br>
 					{% if user.profile.verified_student %}
 						<b>Matric verification:</b> <span style="color:lightgreen">Successful! </span> <br>
 						<b>Student status: </b>  <span style="color:lightgreen">Registered student </span> <br>

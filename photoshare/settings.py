@@ -143,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = ''
 
-STATICFILES_DIRS = [
+STATICFILES_DIR = [
     BASE_DIR / 'static'
 ]
 
