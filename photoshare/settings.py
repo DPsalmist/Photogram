@@ -25,7 +25,7 @@ SECRET_KEY = '@nn*0k&=+j161v2#)r9h&1mw$g#v=j%6es4un^al_7@5qzwy8s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['dphotogram.herokuapp.com', 'localhost', '127.0.0.1']
 
 #Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
