@@ -143,9 +143,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = ''
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATICFILES_DIR = ( 
+    os.path.join(BASE_DIR, 'static')
+)
+
+
+#STATICFILES_DIRS = [
+#    BASE_DIR / 'static'
+#]
 
 # where users upload their photoss
 MEDIA_ROOT = BASE_DIR / 'static/photos'
@@ -156,4 +161,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'logout'
-#LOGOUT_REDIRECT_URL = 'gallery'
