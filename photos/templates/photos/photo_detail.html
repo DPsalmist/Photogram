@@ -10,12 +10,14 @@
 				</p>
 				{% with comments.count as total_comments %}
      			<p class="text-muted">
-       				All Comments: {{ total_comments }}
+       				All Commhhhents: {{ total_comments }}
      			</p>
 				{% endwith %}
-				<div style="height:75vh;">
-					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}">	
-					<p class="m-1"><b>Description:</b> {{ photo.description }}</p>
+
+				<div style="height:80vh;">
+					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}"><br>
+					<p class="m-1"><b>Descriptionjjs:</b> {{ photo.description }}</p>
+
 					<small class="text-muted">
 						<i>Posted by <a href="{% url 'user_pics' object.owner.username %}">{{ object.owner }}</a> on: {{ object.created|date:'F d, Y'  }}</i>
 					</small>

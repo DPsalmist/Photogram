@@ -18,6 +18,7 @@ from django.views.generic import (
 	UpdateView,
 	DeleteView
 )
+import datetime 
 #added something
 # class PhotoListView(ListView):
 # 	model = Photo
@@ -79,9 +80,9 @@ class PhotoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 # Create your views here.
 def gallery(request):
 	category = request.GET.get('category')
-	object_list = Photo.objects.all()
+	object_list = Photo.objects.order_by('-created')
 	if category == None:
-		photos = Photo.objects.all()
+		photos = Photo.objects.order_by('-created')
 	else:
 		object_list = Photo.objects.filter(category__name = category)
 
@@ -107,6 +108,10 @@ def gallery(request):
 def viewPhoto(request, pk):
 	photo = get_object_or_404(Photo, id=pk)
 	user = request.user
+	transaction_id = datetime.datetime.now().timestamp()
+	ref_const = 'gram'
+	pic_ref_id = ref_const + str(transaction_id)
+	print('image ref id:', pic_ref_id)
 	#photo_det = Photo.objects.filter(owner=user).order_by('-created')
 
 	# List of active comments for this post
@@ -130,6 +135,7 @@ def viewPhoto(request, pk):
 		'comment_form': comment_form,
 		'photo':photo,
 		'user':user,
+		'ref_id':pic_ref_id,
 		#'photo_det':photo_det,
     }
 	return render(request, 'photos/photo.html', context)
@@ -138,7 +144,6 @@ def viewPhoto(request, pk):
 def userPhotoList(request, username):
 	current_user = request.user
 	photo_owner = Photo.objects.filter(owner=current_user.id)
-
 	username = get_object_or_404(User, username='username')
 	photo_list = Photo.objects.filter(owner=username).order_by('-created')
 

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from photos.models import *
 from django.contrib.auth.models import User
+from .models import Profile
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 
 # Create your views here.
@@ -75,7 +76,12 @@ def edit(request):
 def dashboard(request):
 	user = request.user
 	photos = Photo.objects.all()
-	return render(request,'account/dashboard.html', {'section': 'dashboard'})
+	total_pics = photos.filter(owner=user.id)
+	user_pics_count = total_pics.count()
+	user_image = user.profile.photo
+	print('total_pics:', user_image)
+	return render(request,'account/dashboard.html', {'section': 'dashboard', 'total_pics':user_pics_count, 
+		'user_pic':user_image})
 
 
 def logoutUser(request):

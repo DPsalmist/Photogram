@@ -17,7 +17,7 @@
 							Change Password
 						</a>
 						<a href="{% url 'edit' %}" class="btn btn-outline-dark btn-sm btn-block">
-							My Profile
+							Update Profile
 						</a>
 	 					<li class="list-group-item">
 							<a href="{% url 'add' %}" class="btn btn-success btn-block btn-sm m-1">
@@ -29,12 +29,34 @@
 			</div>
 			<!-- Gallery section -->
 			<div class="col-md-9">
-				<div class="row m-1">
-					something here
+				<h2>Welcome {{ user.username }}
+					<img style="height: 40px; width: 40px; border-radius: 100%" src="{{ user_pic.url }}" alt="user profile pic">
+				</h2>
+				
+				<div class="">
+					<br>
+					<p>You have a total of {{ total_pics }} picture(s)</p> 
+					<hr>
+					<p>	
+					{% if user.profile.verified_student %}
+						<b>Matric verification:</b> <span style="color:lightgreen">Successful! </span> <br>
+						<b>Student status: </b>  <span style="color:lightgreen">Registered student </span> <br>
+					{% else %}
+						<b>Matric verification:</b> <span style="color:gold">Pending </span> <br>
+						<b>Student status: </b>  <span style="color:red">Unregistered student </span> <br>
+					{% endif %}
+					<b>Department:</b> <span>{{ user.profile.department }}</span> <br>
+					<b>Level:</b> <span>{{ user.profile.level }}</span> <br>
+					<b>Matric no:</b> <span>{{ user.profile.matric_no }}</span> <br>
+					<b>Gender:</b> <span>{{ user.profile.gender }}</span> <br>
+					<b>College:</b> <span>Crawford University</span>
+					</p>
+
 				</div>
-				{% include "photos/pagination.html" with page=photos %}
+
 
 			</div>
+				{% include "photos/pagination.html" with page=photos %}
 		</div>
 	</div>
 {% endblock %}

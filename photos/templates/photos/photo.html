@@ -6,33 +6,50 @@
 		<div class="row justify-content center">
 			<div class="col-md-6">
 				<a href="{% url 'gallery' %}" class="btn btn-dark my-3">Go back</a>
-				
+				<h3>Photo view</h3>
 				{% with comments.count as total_comments %}
      			<p class="text-muted">
        				All Comments: {{ total_comments }}
      			</p>
 				{% endwith %}
-<!-- 				<p>
+			<!-- <p>
      				<a href="{% url "photo_feed" %}" class="btn btn-success btn-block btn-sm m-1">Subscribe to my RSS feed</a>
 				</p> -->
 				<small class="text-muted">
 					<i>Posted by <a href="{% url 'user_pics' photo.owner %}">{{ photo.owner }}</a> on: {{ photo.created }}</i>
 				</small>
-				<div style="height:75vh;">
-					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}">
-					<p class="m-1"><b>Description:</b> {{ photo.description }}</p>	
-					<hr>
-				</div>
+				<div style="height:95vh;">
+					<img style="max-width: 100%; max-height:80%;" src="{{ photo.image.url }}"> <hr> <br>
+					<p class="m-1"><b>Price:</b> #{{ photo.price }}</p>
+					<p class="m-1"><b>Description:</b> {{ photo.description }}</p>
+					{% if user.profile.verified_student %}
+					<p class="m-1"><b>Download Now: </b> 
+						<span class="player">
+                            <a style="background-color: skyblue; color: #fff; border-radius: 20%" href="{{ photo.image.url }}" download="" class="btn btn-outline-primary boxed-btn3">Download</a>
+                  		</span>
+                  	</p>
+					{% else %}
+					<p>
+						<b>Pay To Download:</b> 
+						<a style="background-color: blue; color: #fff; border-radius: 20%"  href="https://paystack.com/pay/photogram" target="blank" class="btn btn-outline-primary boxed-btn3">Purchase now</a> <br>
+
+						<span class="text-muted">NB: The image transaction id is <i>{{ ref_id }}</i></span>
+					</p>
+					{% endif %}
+                </div>
+					<br><br> <hr>
 				{% if photo.owner == user %}
 					<div>
 						<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'photo_update' photo.id %}">Update</a>
 						<a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'photo_delete' photo.id %}">Delete</a>
 					</div>
-				{% endif %}		
+				{% endif %}	
+				</div>
+	
 			</div>
 
 			<!-- USER LIKE SECTION -->
-			<!-- <div class="col-md-6">
+<!-- 			<div class="col-md-6">
 				<h3>User Likes</h3>
 				{% with total_likes=image.users_like.count %}
 			       <div class="image-info">
@@ -61,8 +78,8 @@
 
 		<!-- Authenticated User-->
 		{% if photo.owner == user %}
-		<div class="row justify-content center">
-			<div class="col-md-6">
+		<div class="row justify-content-center">
+			<div class="col-md-6 mt-20">
 				{% for comment in comments %}
 			     <div class="comment" style="background-color: whitesmoke">
 			       <small class="text-muted">
