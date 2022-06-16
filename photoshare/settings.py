@@ -25,7 +25,7 @@ SECRET_KEY = '@nn*0k&=+j161v2#)r9h&1mw$g#v=j%6es4un^al_7@5qzwy8s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['dphotogram.herokuapp.com', 'localhost', '127.0.0.1']
 
 #Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -143,9 +143,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = ''
 
+
 STATICFILES_DIR = [
     BASE_DIR / 'static'
 ]
+STATICFILES_DIR = ( 
+    os.path.join(BASE_DIR, 'static')
+)
+
+
+#STATICFILES_DIRS = [
+#    BASE_DIR / 'static'
+#]
 
 # where users upload their photoss
 MEDIA_ROOT = BASE_DIR / 'static/photos'
@@ -156,4 +165,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'logout'
-#LOGOUT_REDIRECT_URL = 'gallery'
