@@ -49,10 +49,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photos',
-    'taggit',
+    #'taggit',
     'account',
     'crispy_forms',
-    'social_django',
+    #'social_django',
 ]
 
 MIDDLEWARE = [
